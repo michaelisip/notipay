@@ -15,10 +15,10 @@ services:
       - db
     environment:
       POSTGRES_HOST: db
-      POSTGRES_PORT: 5432
-      POSTGRES_USER: johndoe
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: notipay-db
+      POSTGRES_PORT: ${DB_PORT}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
     networks:
       - notipay-network
 
@@ -26,11 +26,11 @@ services:
     container_name: postgres-db
     image: postgres:15
     ports:
-      - '5432:5432'
+      - '${DB_PORT}:5432'
     environment:
-      POSTGRES_USER: johndoe
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: notipay-db
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
