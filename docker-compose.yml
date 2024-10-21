@@ -36,6 +36,21 @@ services:
     networks:
       - notipay-network
 
+  prisma:
+    container_name: prisma-studio
+    image: node:18-alpine
+    working_dir: /usr/src/app
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    command: sh -c "npm install && npx prisma studio"
+    ports:
+      - '5555:5555'
+    depends_on:
+      - db
+    networks:
+      - notipay-network
+
 volumes:
   pgdata:
 
