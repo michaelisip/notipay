@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  notipay-app:
+    container_name: notipay-app
+    image: node:18-alpine
+    working_dir: /usr/src/app
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    command: sh -c "npm install && npm run start:dev"
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: johndoe
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: notipay-db
+    networks:
+      - notipay-network
+
+  db:
+    container_name: postgres-db
+    image: postgres:15
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: johndoe
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: notipay-db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - notipay-network
+
+volumes:
+  pgdata:
+
+networks:
+  notipay-network:
+    driver: bridge
