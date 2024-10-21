@@ -8,7 +8,7 @@ import { PrismaService } from './helpers';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-    })
+    }),
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
