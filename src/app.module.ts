@@ -10,7 +10,7 @@ import {
   OrdersModule,
   PrismaModule,
   ProductsModule,
-  UsersModule,
+  SellersModule,
 } from './modules';
 
 @Module({
@@ -24,10 +24,10 @@ import {
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    UsersModule,
     PrismaModule,
     OrdersModule,
     ProductsModule,
+    SellersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
