@@ -2,12 +2,16 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { PrismaService } from './helpers';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
-import { UsersModule } from './users/users.module';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import {
+  OrdersModule,
+  PrismaModule,
+  ProductsModule,
+  UsersModule,
+} from './modules';
 
 @Module({
   imports: [
@@ -21,8 +25,11 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
       isGlobal: true,
     }),
     UsersModule,
+    PrismaModule,
+    OrdersModule,
+    ProductsModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [AppService],
 })
 export class AppModule {}
