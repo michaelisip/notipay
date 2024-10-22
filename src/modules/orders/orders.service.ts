@@ -1,26 +1,59 @@
 import { Injectable } from '@nestjs/common';
-import { CreateOrderInput } from './dto/create-order.input';
-import { UpdateOrderInput } from './dto/update-order.input';
+import { PrismaService } from '../prisma/prisma.service';
+import { Order } from '@prisma/client';
+import { CreateOrderInput, UpdateOrderInput } from './dto';
 
 @Injectable()
 export class OrdersService {
-  create(createOrderInput: CreateOrderInput) {
-    return 'This action adds a new order';
+  constructor(private prismaService: PrismaService) {}
+
+  async create(createOrderInput: CreateOrderInput): Promise<Order> {
+    return await this.prismaService.order.create({
+      data: {
+        ...createOrderInput,
+      },
+      include: {
+        product: true,
+        seller: true,
+      },
+    });
   }
 
-  findAll() {
-    return `This action returns all orders`;
+  async findAll(): Promise<Order[]> {
+    return this.prismaService.order.findMany({
+      include: {
+        product: true,
+        seller: true,
+      },
+    });
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} order`;
+  async findOne(id: string): Promise<Order | null> {
+    return this.prismaService.order.findUnique({
+      where: { id },
+      include: {
+        product: true,
+        seller: true,
+      },
+    });
   }
 
-  update(id: string, updateOrderInput: UpdateOrderInput) {
-    return `This action updates a #${id} order`;
+  update(id: string, updateOrderInput: UpdateOrderInput): Promise<Order> {
+    return this.prismaService.order.update({
+      where: { id },
+      data: {
+        ...updateOrderInput,
+      },
+      include: {
+        product: true,
+        seller: true,
+      },
+    });
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} order`;
+  remove(id: string): Promise<Order> {
+    return this.prismaService.order.delete({
+      where: { id },
+    });
   }
 }

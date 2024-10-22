@@ -1,9 +1,7 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { OrdersService } from './orders.service';
-import { Order } from './entities/order.entity';
-import { CreateOrderInput } from './dto/create-order.input';
-import { UpdateOrderInput } from './dto/update-order.input';
-
+import { Order } from './entities';
+import { CreateOrderInput, UpdateOrderInput } from './dto';
 @Resolver(() => Order)
 export class OrdersResolver {
   constructor(private readonly ordersService: OrdersService) {}
@@ -19,7 +17,7 @@ export class OrdersResolver {
   }
 
   @Query(() => Order, { name: 'order' })
-  findOne(@Args('id', { type: () => Int }) id: string) {
+  findOne(@Args('id', { type: () => String }) id: string) {
     return this.ordersService.findOne(id);
   }
 
@@ -29,7 +27,7 @@ export class OrdersResolver {
   }
 
   @Mutation(() => Order)
-  removeOrder(@Args('id', { type: () => Int }) id: string) {
+  removeOrder(@Args('id', { type: () => String }) id: string) {
     return this.ordersService.remove(id);
   }
 }

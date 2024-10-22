@@ -1,8 +1,7 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { SellersService } from './sellers.service';
-import { Seller } from './entities/seller.entity';
-import { CreateSellerInput } from './dto/create-seller.input';
-import { UpdateSellerInput } from './dto/update-seller.input';
+import { Seller } from './entities';
+import { CreateSellerInput, UpdateSellerInput } from './dto';
 
 @Resolver(() => Seller)
 export class SellersResolver {
@@ -21,7 +20,7 @@ export class SellersResolver {
   }
 
   @Query(() => Seller, { name: 'seller' })
-  findOne(@Args('id', { type: () => Int }) id: string) {
+  findOne(@Args('id', { type: () => String }) id: string) {
     return this.sellersService.findOne(id);
   }
 
@@ -33,7 +32,7 @@ export class SellersResolver {
   }
 
   @Mutation(() => Seller)
-  removeSeller(@Args('id', { type: () => Int }) id: string) {
+  removeSeller(@Args('id', { type: () => String }) id: string) {
     return this.sellersService.remove(id);
   }
 }

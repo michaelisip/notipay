@@ -1,26 +1,45 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSellerInput } from './dto/create-seller.input';
-import { UpdateSellerInput } from './dto/update-seller.input';
+import { PrismaService } from '../prisma/prisma.service';
+import { Seller } from '@prisma/client';
+import { CreateSellerInput, UpdateSellerInput } from './dto';
 
 @Injectable()
 export class SellersService {
-  create(createSellerInput: CreateSellerInput) {
-    return 'This action adds a new seller';
+  constructor(private prismaService: PrismaService) {}
+
+  async create(createSellerInput: CreateSellerInput): Promise<Seller> {
+    return await this.prismaService.seller.create({
+      data: {
+        ...createSellerInput,
+      },
+    });
   }
 
-  findAll() {
-    return `This action returns all sellers`;
+  async findAll(): Promise<Seller[]> {
+    return await this.prismaService.seller.findMany();
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} seller`;
+  async findOne(id: string): Promise<Seller> {
+    return await this.prismaService.seller.findUnique({
+      where: { id },
+    });
   }
 
-  update(id: string, updateSellerInput: UpdateSellerInput) {
-    return `This action updates a #${id} seller`;
+  async update(
+    id: string,
+    updateSellerInput: UpdateSellerInput
+  ): Promise<Seller> {
+    return await this.prismaService.seller.update({
+      where: { id },
+      data: {
+        ...updateSellerInput,
+      },
+    });
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} seller`;
+  async remove(id: string): Promise<Seller> {
+    return await this.prismaService.seller.delete({
+      where: { id },
+    });
   }
 }
