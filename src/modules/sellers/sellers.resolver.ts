@@ -9,7 +9,9 @@ export class SellersResolver {
   constructor(private readonly sellersService: SellersService) {}
 
   @Mutation(() => Seller)
-  createSeller(@Args('createSellerInput') createSellerInput: CreateSellerInput) {
+  createSeller(
+    @Args('createSellerInput') createSellerInput: CreateSellerInput
+  ) {
     return this.sellersService.create(createSellerInput);
   }
 
@@ -19,17 +21,19 @@ export class SellersResolver {
   }
 
   @Query(() => Seller, { name: 'seller' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => Int }) id: string) {
     return this.sellersService.findOne(id);
   }
 
   @Mutation(() => Seller)
-  updateSeller(@Args('updateSellerInput') updateSellerInput: UpdateSellerInput) {
+  updateSeller(
+    @Args('updateSellerInput') updateSellerInput: UpdateSellerInput
+  ) {
     return this.sellersService.update(updateSellerInput.id, updateSellerInput);
   }
 
   @Mutation(() => Seller)
-  removeSeller(@Args('id', { type: () => Int }) id: number) {
+  removeSeller(@Args('id', { type: () => Int }) id: string) {
     return this.sellersService.remove(id);
   }
 }

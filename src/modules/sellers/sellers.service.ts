@@ -12,15 +12,15 @@ export class SellersService {
     return `This action returns all sellers`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} seller`;
   }
 
-  update(id: number, updateSellerInput: UpdateSellerInput) {
+  update(id: string, updateSellerInput: UpdateSellerInput) {
     return `This action updates a #${id} seller`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} seller`;
   }
 }
